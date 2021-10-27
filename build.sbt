@@ -22,7 +22,7 @@ lazy val scalacopts = Seq(
   "-Ymacro-annotations"
 ) 
 
-lazy val root = (project in file("."))
+lazy val mainProject = (project in file("."))
   .settings(
     name := "zio-todo-g8",
     libraryDependencies ++= Seq(zio,zioConfig,zioMacros,zioStreams,zioTest,zioTestSbt),
