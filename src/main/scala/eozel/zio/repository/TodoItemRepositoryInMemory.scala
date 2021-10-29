@@ -1,23 +1,16 @@
 package eozel.zio.repository
 import eozel.zio.domain._
 import zio._
-import zio.macros._
 import zio.stream._
 
-@accessible
-trait TodoItemDao {
 
-  def getTodoItem(id: Long): IO[TodoAppError, Option[TodoItem]]
-  def listTodoItems(): Stream[TodoAppError, TodoItem]
-  def upsertTodoItem(item: TodoItem): IO[TodoAppError, Unit]
-}
 
-object TodoItemDao {
+object TodoItemRepositoryInMemory {
 
-  val inMemoryDao: ULayer[Has[TodoItemDao]] = (for {
+  val inMemoryDao: ULayer[Has[TodoItemRepository]] = (for {
     todoItemListRef <- Ref.make(Map.empty[Long, TodoItem])
 
-  } yield new TodoItemDao {
+  } yield new TodoItemRepository {
 
     override def getTodoItem(id: Long): IO[TodoAppError, Option[TodoItem]] = todoItemListRef.get.map(m => m.get(id))
 
