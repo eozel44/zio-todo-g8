@@ -4,25 +4,23 @@ import zio._
 import zio.stream._
 
 
-
 object TodoItemRepositoryInMemory {
 
-  val inMemoryDao: ZLayer[Any,Nothing,Has[TodoItemRepository]]= (for {
-    todoItemListRef <- Ref.make(Map.empty[Long, TodoItem])
+  val todoItemListRef = scala.collection.mutable.Map.empty[Long, TodoItem]
 
-  } yield new TodoItemRepository {
+  case class TodoItemRepositoryInMemoryLive() extends TodoItemRepository {
 
-    override def getTodoItem(id: Long): IO[TodoAppError, Option[TodoItem]] = todoItemListRef.get.map(m => m.get(id))
+    
+    override def getTodoItem(id: Long): IO[TodoAppError, Option[TodoItem]] = ZIO.succeed(todoItemListRef.get(id))
 
-    override def listTodoItems(): Stream[TodoAppError, TodoItem] = for {
-      map  <- ZStream.fromEffect(todoItemListRef.get)
-      item <- ZStream.fromIterable(map.values)
-
-    } yield item
+    override def listTodoItems(): Stream[TodoAppError, TodoItem] = ZStream.fromIterable(todoItemListRef.values)
 
     override def upsertTodoItem(item: TodoItem): IO[TodoAppError, Unit] =
-      todoItemListRef.getAndUpdate(m => m + (item.id -> item)).unit
+      ZIO.succeed(todoItemListRef.addOne(item.id -> item))
 
-  }).toLayer
+  }
+
+  val todoItemRepositoryInMemoryLive: ZLayer[Any, Nothing, Has[TodoItemRepository]] =
+    TodoItemRepositoryInMemoryLive.toLayer
 
 }

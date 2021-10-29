@@ -11,13 +11,15 @@ object Main extends App {
     val program: ZIO[Has[Logging] with Has[TodoItemRepository], TodoAppError, Unit] = for {
       _    <- Logging.log("Application Started!")
       _    <- TodoItemRepository.upsertTodoItem(TodoItem(1, "todo", "eren", false))
-      _    <- Logging.log("Item inserted")
+      _    <- TodoItemRepository.upsertTodoItem(TodoItem(2, "todo", "ahmet", false))
+      _    <- TodoItemRepository.upsertTodoItem(TodoItem(3, "todo", "mehmet", false))
+      _    <- Logging.log("Items inserted")
       item <- TodoItemRepository.getTodoItem(1)
-      _    <- Logging.log(s"Inserted Item is:$item")
+      _    <- Logging.log(s"Get Item :$item")
     } yield ()
 
     val dbLayerWithLog: ZLayer[Any, TodoAppError, Has[Logging] with Has[TodoItemRepository]] =
-      Logging.loggingLive ++ TodoItemRepositoryDoobie.todoItemRepositoryLive
+      Logging.loggingLive ++ TodoItemRepositoryInMemory.todoItemRepositoryInMemoryLive
 
     program
       .provideLayer(dbLayerWithLog)

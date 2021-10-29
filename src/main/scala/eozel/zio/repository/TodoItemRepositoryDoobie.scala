@@ -3,10 +3,9 @@ import zio._
 import eozel.zio.domain._
 import zio.stream._
 
-
 object TodoItemRepositoryDoobie {
-  
-  case class TodoItemRepositoryLive() extends TodoItemRepository {
+
+  case class TodoItemRepositoryDoobieLive() extends TodoItemRepository {
 
     override def getTodoItem(id: Long): IO[TodoAppError, Option[TodoItem]] = ???
 
@@ -16,5 +15,5 @@ object TodoItemRepositoryDoobie {
 
   }
 
-  val todoItemRepositoryLive: ZLayer[Any,Nothing,Has[TodoItemRepository]]= TodoItemRepositoryLive.toLayer
+  val todoItemRepositoryDoobieLive: ZLayer[Any, Nothing, Has[TodoItemRepository]] = TodoItemRepositoryDoobieLive.toLayer
 }
