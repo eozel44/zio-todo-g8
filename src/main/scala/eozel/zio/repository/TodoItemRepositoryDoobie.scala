@@ -1,12 +1,10 @@
 package eozel.zio.repository
-import zio._
-import eozel.zio.domain._
-import zio.stream._
-import doobie._
-import doobie.free.connection
 import doobie.implicits._
 import doobie.util.transactor.Transactor
+import eozel.zio.domain._
+import zio._
 import zio.interop.catz._
+import zio.stream._
 object TodoItemRepositoryDoobie {
 
   case class TodoItemRepositoryDoobieLive(xa: Transactor[Task]) extends TodoItemRepository {

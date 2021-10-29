@@ -3,11 +3,9 @@ import eozel.zio.domain._
 import zio._
 import zio.stream._
 
-
-
 object TodoItemRepositoryDao {
 
-  val inMemoryDao: ZLayer[Any,Nothing,Has[TodoItemRepository]]= (for {
+  val inMemoryDao: ZLayer[Any, Nothing, Has[TodoItemRepository]] = (for {
     todoItemListRef <- Ref.make(Map.empty[Long, TodoItem])
 
   } yield new TodoItemRepository {

@@ -2,15 +2,14 @@ package eozel.zio.repository
 import eozel.zio.domain._
 import zio._
 import zio.stream._
-
+import scala.collection.mutable
 
 object TodoItemRepositoryInMemory {
 
-  val todoItemListRef = scala.collection.mutable.Map.empty[Long, TodoItem]
+  val todoItemListRef: mutable.Map[Long, TodoItem] = scala.collection.mutable.Map.empty[Long, TodoItem]
 
   case class TodoItemRepositoryInMemoryLive() extends TodoItemRepository {
 
-    
     override def getTodoItem(id: Long): IO[TodoAppError, Option[TodoItem]] = ZIO.succeed(todoItemListRef.get(id))
 
     override def listTodoItems(): Stream[TodoAppError, TodoItem] = ZStream.fromIterable(todoItemListRef.values)
