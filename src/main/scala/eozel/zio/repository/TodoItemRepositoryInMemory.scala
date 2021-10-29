@@ -7,7 +7,7 @@ import zio.stream._
 
 object TodoItemRepositoryInMemory {
 
-  val inMemoryDao: ULayer[Has[TodoItemRepository]] = (for {
+  val inMemoryDao: ZLayer[Any,Nothing,Has[TodoItemRepository]]= (for {
     todoItemListRef <- Ref.make(Map.empty[Long, TodoItem])
 
   } yield new TodoItemRepository {
