@@ -1,6 +1,9 @@
 package eozel.zio
-import zio._
 
+import eozel.zio.domain._
+import eozel.zio.logging._
+import eozel.zio.repository._
+import zio._
 object Main extends App {
 
   override def run(args: List[String]): URIO[ZEnv, ExitCode] = {

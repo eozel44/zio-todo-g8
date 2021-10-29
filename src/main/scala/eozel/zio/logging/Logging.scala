@@ -1,4 +1,4 @@
-package eozel.zio
+package eozel.zio.logging
 import zio._
 import zio.macros.accessible
 

@@ -1,4 +1,5 @@
-package eozel.zio
+package eozel.zio.repository
+import eozel.zio.domain._
 import zio._
 import zio.macros._
 import zio.stream._
