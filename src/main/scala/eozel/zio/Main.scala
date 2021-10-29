@@ -17,7 +17,7 @@ object Main extends App {
     } yield ()
 
     val dbLayerWithLog: ZLayer[Any, TodoAppError, Has[Logging] with Has[TodoItemRepository]] =
-      Logging.loggingLive ++ TodoItemRepositoryInMemory.inMemoryDao
+      Logging.loggingLive ++ TodoItemRepositoryDoobie.todoItemRepositoryLive
 
     program
       .provideLayer(dbLayerWithLog)

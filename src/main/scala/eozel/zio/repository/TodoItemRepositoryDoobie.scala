@@ -1,13 +1,12 @@
 package eozel.zio.repository
 import zio._
 import eozel.zio.domain._
-import eozel.zio.config._
 import zio.stream._
 
 
 object TodoItemRepositoryDoobie {
   
-  case class TodoItemRepositoryLive(dbconfig: DatabaseConfig) extends TodoItemRepository {
+  case class TodoItemRepositoryLive() extends TodoItemRepository {
 
     override def getTodoItem(id: Long): IO[TodoAppError, Option[TodoItem]] = ???
 
@@ -17,5 +16,5 @@ object TodoItemRepositoryDoobie {
 
   }
 
-  val todoItemRepositoryLive: URLayer[Has[DatabaseConfig], Has[TodoItemRepositoryLive]] = TodoItemRepositoryLive.toLayer
+  val todoItemRepositoryLive: ZLayer[Any,Nothing,Has[TodoItemRepository]]= TodoItemRepositoryLive.toLayer
 }
