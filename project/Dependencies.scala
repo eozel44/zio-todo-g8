@@ -24,5 +24,8 @@ object Dependencies {
   lazy val doobiePostgres = "org.tpolecat" %% "doobie-postgres" % doobieVersion
 
   //interop zio
-  lazy val catsInteropZio = "dev.zio" %% "zio-interop-cats" % "2.3.1.0",
+  lazy val catsInteropZio = "dev.zio" %% "zio-interop-cats" % "2.3.1.0"
+
+  //mariadb
+  lazy val mariaDB = "org.mariadb.jdbc" % "mariadb-java-client" % "2.6.0"
 }

@@ -1,5 +1,6 @@
 package eozel.zio
 
+import eozel.zio.config._
 import eozel.zio.domain._
 import eozel.zio.logging._
 import eozel.zio.repository._
@@ -21,8 +22,11 @@ object Main extends App {
     val dbLayerWithLog: ZLayer[Any, TodoAppError, Has[Logging] with Has[TodoItemRepository]] =
       Logging.loggingLive ++ TodoItemRepositoryInMemory.todoItemRepositoryInMemoryLive
 
+    val dbLayerDoobie: ZLayer[Any, TodoAppError, Has[Logging] with Has[TodoItemRepository]] =
+      Logging.loggingLive ++ (AppConfig.configurationLive >>> TodoItemRepositoryDoobie.todoItemRepositoryDoobieLive)
+
     program
-      .provideLayer(dbLayerWithLog)
+      .provideLayer(dbLayerDoobie)
       .catchAll(t => ZIO.succeed(t.printStackTrace()).map(_ => ExitCode.failure))
       .exitCode
 

@@ -1,8 +1,9 @@
 package eozel.zio.domain
 
 //error
-sealed trait TodoAppError                   extends Throwable
-case class TodoAppDaoError(message: String) extends RuntimeException(message) with TodoAppError
+sealed trait TodoAppError                      extends Throwable
+case class TodoAppDaoError(message: String)    extends RuntimeException(message) with TodoAppError
+case class TodoAppConfigError(message: String) extends IllegalStateException(message) with TodoAppError
 
 //case class
 case class TodoItem(id: Long, description: String, owner: String, finished: Boolean)

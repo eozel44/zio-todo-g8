@@ -36,7 +36,8 @@ lazy val mainProject = (project in file("."))
       doobie,
       doobieH2,
       doobiePostgres,
-      catsInteropZio
+      catsInteropZio,
+      mariaDB
     ),
     scalacOptions ++= scalacopts
   )

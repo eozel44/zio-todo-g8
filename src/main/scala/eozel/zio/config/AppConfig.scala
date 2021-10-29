@@ -1,5 +1,6 @@
 package eozel.zio.config
 
+import eozel.zio.domain._
 import pureconfig.ConfigSource
 import pureconfig.generic.auto._
 import zio._
@@ -7,18 +8,18 @@ import zio._
 case class DBConfig(url: String, driver: String, username: String, password: String)
 case class HttpConfig(port: Int)
 
-case class AppConfiguration(
+case class AppConfig(
   db: DBConfig,
   http: HttpConfig
 )
 
-object Configuration {
+object AppConfig {
 
-  def configurationLive: ZLayer[Any, IllegalStateException, Has[AppConfiguration]] = ZLayer.fromEffect {
+  def configurationLive: ZLayer[Any, TodoAppError, Has[AppConfig]] = ZLayer.fromEffect {
     ZIO
-      .fromEither(ConfigSource.default.load[AppConfiguration])
+      .fromEither(ConfigSource.default.load[AppConfig])
       .mapError(failures =>
-        new IllegalStateException(
+        TodoAppConfigError(
           s"Error loading configuration: $failures"
         )
       )

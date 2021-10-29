@@ -1,16 +1,24 @@
 package eozel.zio.repository
 import doobie.implicits._
 import doobie.util.transactor.Transactor
+import eozel.zio.config._
 import eozel.zio.domain._
 import zio._
 import zio.interop.catz._
 import zio.stream._
 object TodoItemRepositoryDoobie {
 
-  case class TodoItemRepositoryDoobieLive(xa: Transactor[Task]) extends TodoItemRepository {
+  case class TodoItemRepositoryDoobieLive(appConfig: AppConfig) extends TodoItemRepository {
+
+    val xa: Transactor.Aux[Task, Unit] = Transactor.fromDriverManager[Task](
+      appConfig.db.driver,
+      appConfig.db.url,
+      appConfig.db.username,
+      appConfig.db.password
+    )
 
     override def getTodoItem(id: Long): IO[TodoAppError, Option[TodoItem]] =
-      sql"""SELECT id, description, owner, finished FROM Todos u where u.id = ${id}"""
+      sql"""SELECT id, description, owner, finished FROM todos u where u.id = ${id}"""
         .query[TodoItem]
         .option
         .transact(xa)
@@ -23,13 +31,13 @@ object TodoItemRepositoryDoobie {
     override def listTodoItems(): Stream[TodoAppError, TodoItem] = ???
 
     override def upsertTodoItem(item: TodoItem): IO[TodoAppError, Unit] =
-      sql"""INSERT INTO Todos (id, description, owner, finished) VALUES (${item.id}, ${item.description}, ${item.owner}, ${item.finished})""".update.run
+      sql"""INSERT INTO todos (id, description, owner, finished) VALUES (${item.id}, ${item.description}, ${item.owner}, ${item.finished})""".update.run
         .transact(xa)
         .orDie
         .unit
 
   }
 
-  val todoItemRepositoryDoobieLive: URLayer[Has[Transactor[Task]], Has[TodoItemRepositoryDoobieLive]] =
+  val todoItemRepositoryDoobieLive: ZLayer[Has[AppConfig], Nothing, Has[TodoItemRepository]] =
     TodoItemRepositoryDoobieLive.toLayer
 }
