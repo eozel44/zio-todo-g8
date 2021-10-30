@@ -35,7 +35,8 @@ lazy val mainProject = (project in file("."))
       pureconfig,
       doobie,      
       catsInteropZio,
-      mariaDB
+      mariaDB,
+      hikariCP
     ),
     scalacOptions ++= scalacopts
   )

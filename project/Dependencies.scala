@@ -28,4 +28,6 @@ object Dependencies {
 
   //mariadb
   lazy val mariaDB = "org.mariadb.jdbc" % "mariadb-java-client" % "2.6.0"
+
+  lazy val hikariCP = "com.zaxxer" % "HikariCP" % "4.0.3"
 }

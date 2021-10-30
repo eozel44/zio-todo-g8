@@ -7,7 +7,17 @@ import zio._
 
 // TODO:zio-config env variable ile config oluşturma
 
-case class DBConfig(url: String, driver: String, username: String, password: String)
+case class DBConfig(
+  url: String,
+  driver: String,
+  username: String,
+  password: String,
+  minPoolSize: Int,
+  maxPoolSize: Int,
+  maxIdleTime: Int,
+  checkoutTimeout: Int
+)
+
 case class HttpConfig(port: Int)
 
 case class AppConfig(
