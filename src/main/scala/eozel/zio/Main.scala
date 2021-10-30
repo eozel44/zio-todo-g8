@@ -19,14 +19,21 @@ object Main extends App {
       _    <- Logging.log(s"Get Item :$item")
     } yield ()
 
-    val dbLayerWithLog: ZLayer[Any, TodoAppError, Has[Logging] with Has[TodoItemRepository]] =
+    val dbLayerWithLog: ZLayer[Any, TodoAppError, Has[TodoItemRepository]] =
       Logging.loggingLive ++ TodoItemRepositoryInMemory.todoItemRepositoryInMemoryLive
 
-    val dbLayerDoobie: ZLayer[Any, TodoAppError, Has[Logging] with Has[TodoItemRepository]] =
-      Logging.loggingLive ++ (AppConfig.configurationLive >>> TodoItemRepositoryDoobie.todoItemRepositoryDoobieLive)
+    
+    val dbConfigLayer = AppConfig.configurationLive >>> (for {
+      appConfig <- ZIO.service[AppConfig]
+    } yield appConfig.db).toLayer
+
+    val dbLayerDoobie: ZLayer[Any, TodoAppError, Has[TodoItemRepository]] =
+      dbConfigLayer >>> TodoItemRepositoryDoobie.todoItemRepositoryDoobieLive
+
+      val prodLayer = Logging.loggingLive ++ dbLayerDoobie
 
     program
-      .provideLayer(dbLayerDoobie)
+      .provideLayer(prodLayer)
       .catchAll(t => ZIO.succeed(t.printStackTrace()).map(_ => ExitCode.failure))
       .exitCode
 

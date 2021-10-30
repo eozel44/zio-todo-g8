@@ -18,10 +18,10 @@ object Dependencies {
 
   //doobie
 
-  lazy val doobieVersion  = "0.12.1"
-  lazy val doobie         = "org.tpolecat" %% "doobie-core"     % doobieVersion
-  lazy val doobieH2       = "org.tpolecat" %% "doobie-h2"       % doobieVersion
-  lazy val doobiePostgres = "org.tpolecat" %% "doobie-postgres" % doobieVersion
+  lazy val doobieVersion = "0.12.1"
+  lazy val doobie        = "org.tpolecat" %% "doobie-core" % doobieVersion
+  //lazy val doobieH2       = "org.tpolecat" %% "doobie-h2"       % doobieVersion
+  //lazy val doobiePostgres = "org.tpolecat" %% "doobie-postgres" % doobieVersion
 
   //interop zio
   lazy val catsInteropZio = "dev.zio" %% "zio-interop-cats" % "2.3.1.0"

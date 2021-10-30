@@ -5,6 +5,7 @@ import zio._
 import zio.macros.accessible
 import zio.stream._
 
+// TODO quill repository, ScalikeJDBC repository
 @accessible
 trait TodoItemRepository {
 

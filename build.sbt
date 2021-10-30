@@ -33,9 +33,7 @@ lazy val mainProject = (project in file("."))
       zioTest,
       zioTestSbt,
       pureconfig,
-      doobie,
-      doobieH2,
-      doobiePostgres,
+      doobie,      
       catsInteropZio,
       mariaDB
     ),

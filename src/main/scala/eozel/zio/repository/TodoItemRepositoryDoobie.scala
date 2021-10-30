@@ -6,15 +6,16 @@ import eozel.zio.domain._
 import zio._
 import zio.interop.catz._
 import zio.stream._
+
 object TodoItemRepositoryDoobie {
 
-  case class TodoItemRepositoryDoobieLive(appConfig: AppConfig) extends TodoItemRepository {
+  case class TodoItemRepositoryDoobieLive(db: DBConfig) extends TodoItemRepository {
 
     val xa: Transactor.Aux[Task, Unit] = Transactor.fromDriverManager[Task](
-      appConfig.db.driver,
-      appConfig.db.url,
-      appConfig.db.username,
-      appConfig.db.password
+      db.driver,
+      db.url,
+      db.username,
+      db.password
     )
 
     override def getTodoItem(id: Long): IO[TodoAppError, Option[TodoItem]] =
@@ -28,7 +29,15 @@ object TodoItemRepositoryDoobie {
           case None       => ZIO.fail(TodoAppDaoError("todo not found"))
         }
 
+    
+
+        /***
+         * 
+         * eren: streami nasıl yaparız
+         * 
+        */
     override def listTodoItems(): Stream[TodoAppError, TodoItem] = ???
+        
 
     override def upsertTodoItem(item: TodoItem): IO[TodoAppError, Unit] =
       sql"""INSERT INTO todos (id, description, owner, finished) VALUES (${item.id}, ${item.description}, ${item.owner}, ${item.finished})""".update.run
@@ -38,6 +47,6 @@ object TodoItemRepositoryDoobie {
 
   }
 
-  val todoItemRepositoryDoobieLive: ZLayer[Has[AppConfig], Nothing, Has[TodoItemRepository]] =
+  val todoItemRepositoryDoobieLive: ZLayer[Has[DBConfig], Nothing, Has[TodoItemRepository]] =
     TodoItemRepositoryDoobieLive.toLayer
 }

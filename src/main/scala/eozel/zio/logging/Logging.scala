@@ -2,6 +2,7 @@ package eozel.zio.logging
 import zio._
 import zio.macros.accessible
 
+// TODO zio-logging & zio-logging-slf4j should be implemented
 @accessible
 trait Logging {
   def log(line: String): UIO[Unit]

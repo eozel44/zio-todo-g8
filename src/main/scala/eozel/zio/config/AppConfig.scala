@@ -5,6 +5,8 @@ import pureconfig.ConfigSource
 import pureconfig.generic.auto._
 import zio._
 
+// TODO:zio-config env variable ile config oluşturma
+
 case class DBConfig(url: String, driver: String, username: String, password: String)
 case class HttpConfig(port: Int)
 
