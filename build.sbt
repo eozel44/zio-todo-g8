@@ -26,17 +26,7 @@ lazy val mainProject = (project in file("."))
   .settings(
     name := "zio-todo-g8",
     libraryDependencies ++= Seq(
-      zio,
-      zioConfig,
-      zioMacros,
-      zioStreams,
-      zioTest,
-      zioTestSbt,
-      pureconfig,
-      doobie,      
-      catsInteropZio,
-      mariaDB,
-      hikariCP
+     zio,pureConfig,doobie,mariaDB,hikari
     ),
     scalacOptions ++= scalacopts
   )

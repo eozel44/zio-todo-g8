@@ -2,32 +2,40 @@ import sbt._
 
 object Dependencies {
 
-  lazy val zioVersion = "1.0.12"
-  lazy val zio        = "dev.zio" %% "zio"          % zioVersion
-  lazy val zioStreams = "dev.zio" %% "zio-streams"  % zioVersion
-  lazy val zioMacros  = "dev.zio" %% "zio-macros"   % zioVersion
-  lazy val zioTest    = "dev.zio" %% "zio-test"     % zioVersion % Test
-  lazy val zioTestSbt = "dev.zio" %% "zio-test-sbt" % zioVersion % Test
+  private object Versions {
+    val zio         = "1.0.12"
+    val pureConfig  = "0.17.0"
+    val doobie      = "0.12.1"
+    val catsInterop = "2.3.1.0"
+    val mariaDB     = "2.6.0"
+    val hikari      = "4.0.3"
+  }
 
-  lazy val zioConfigVersion = "1.0.10"
-  lazy val zioConfig        = "dev.zio" %% "zio-config" % zioConfigVersion
+  object Libraries {
 
-  //config
-  lazy val pureConfigVersion = "0.17.0"
-  lazy val pureconfig        = "com.github.pureconfig" %% "pureconfig" % pureConfigVersion
+    lazy val zio = Seq(
+      "dev.zio" %% "zio"          % Versions.zio,
+      "dev.zio" %% "zio-streams"  % Versions.zio,
+      "dev.zio" %% "zio-macros"   % Versions.zio,
+      "dev.zio" %% "zio-test"     % Versions.zio % Test,
+      "dev.zio" %% "zio-test-sbt" % Versions.zio % Test
+    )
 
-  //doobie
+    lazy val pureConfig = Seq(
+      "com.github.pureconfig" %% "pureconfig" % Versions.pureConfig
+    )
 
-  lazy val doobieVersion = "0.12.1"
-  lazy val doobie        = "org.tpolecat" %% "doobie-core" % doobieVersion
-  //lazy val doobieH2       = "org.tpolecat" %% "doobie-h2"       % doobieVersion
-  //lazy val doobiePostgres = "org.tpolecat" %% "doobie-postgres" % doobieVersion
+    lazy val doobie = Seq(
+      "org.tpolecat" %% "doobie-core"      % Versions.doobie,
+      "dev.zio"      %% "zio-interop-cats" % Versions.catsInterop
+    )
 
-  //interop zio
-  lazy val catsInteropZio = "dev.zio" %% "zio-interop-cats" % "2.3.1.0"
+    lazy val mariaDB = Seq(
+      "org.mariadb.jdbc" % "mariadb-java-client" % Versions.mariaDB
+    )
 
-  //mariadb
-  lazy val mariaDB = "org.mariadb.jdbc" % "mariadb-java-client" % "2.6.0"
-
-  lazy val hikariCP = "com.zaxxer" % "HikariCP" % "4.0.3"
+    lazy val hikari = Seq(
+      "com.zaxxer" % "HikariCP" % Versions.hikari
+    )
+  }
 }
