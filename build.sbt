@@ -1,4 +1,5 @@
 import Dependencies._
+import Dependencies.Libraries._
 
 ThisBuild / scalaVersion := "2.13.6"
 ThisBuild / version := "0.1.0-SNAPSHOT"
@@ -25,9 +26,7 @@ lazy val scalacopts = Seq(
 lazy val mainProject = (project in file("."))
   .settings(
     name := "zio-todo-g8",
-    libraryDependencies ++= Seq(
-     zio,pureConfig,doobie,mariaDB,hikari
-    ),
+    libraryDependencies ++=  zio ++ pureConfig ++ doobie ++ mariaDB ++ hikari ++ zioLogging ++logging,
     scalacOptions ++= scalacopts
   )
 
