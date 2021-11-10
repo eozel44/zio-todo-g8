@@ -1,15 +1,13 @@
 package eozel.zio.utils
 
-
 import com.zaxxer.hikari.HikariDataSource
+import eozel.zio.config.DBConfig
 import zio._
 import zio.stream._
 
 import java.sql.{Connection, PreparedStatement, ResultSet}
 import java.time.{Instant, OffsetDateTime, ZoneId}
 import javax.sql.DataSource
-import eozel.zio.config.DBConfig
-
 
 object JDBCUtils {
   val zoneID: ZoneId = ZoneId.of("Europe/Istanbul")

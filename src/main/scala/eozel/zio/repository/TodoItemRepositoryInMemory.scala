@@ -20,7 +20,8 @@ object TodoItemRepositoryInMemory {
 
   }
 
-  val myZio = Ref.make(Map.empty[Long, TodoItem]).map(r => TodoItemRepositoryInMemoryLive(r))
+  val myZio: ZIO[Any, Nothing, TodoItemRepositoryInMemoryLive] =
+    Ref.make(Map.empty[Long, TodoItem]).map(r => TodoItemRepositoryInMemoryLive(r))
 
   val todoItemRepositoryInMemoryLive: ZLayer[Any, Nothing, Has[TodoItemRepository]] =
     myZio.toLayer

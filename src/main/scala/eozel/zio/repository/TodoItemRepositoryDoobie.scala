@@ -29,15 +29,12 @@ object TodoItemRepositoryDoobie {
           case None       => ZIO.fail(TodoAppDaoError("todo not found"))
         }
 
-    
-
-        /***
-         * 
-         * eren: streami nasıl yaparız
-         * 
-        */
+    /**
+     * *
+     *
+     * eren: streami nasıl yaparız
+     */
     override def listTodoItems(): Stream[TodoAppError, TodoItem] = ???
-        
 
     override def upsertTodoItem(item: TodoItem): IO[TodoAppError, Unit] =
       sql"""INSERT INTO todos (id, description, owner, finished) VALUES (${item.id}, ${item.description}, ${item.owner}, ${item.finished})""".update.run

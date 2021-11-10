@@ -2,10 +2,10 @@ package eozel.zio
 
 import eozel.zio.config._
 import eozel.zio.domain._
-import zio.logging._
-import zio.logging.slf4j._
 import eozel.zio.repository._
 import zio._
+import zio.logging._
+import zio.logging.slf4j._
 object Main extends App {
 
   override def run(args: List[String]): URIO[ZEnv, ExitCode] = {
