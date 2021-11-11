@@ -7,7 +7,7 @@ import zio.stream._
 
 // TODO quill repository, ScalikeJDBC repository
 @accessible
-trait TodoItemRepository {
+trait TodoItemRepository extends Serializable {
 
   def getTodoItem(id: Long): IO[TodoAppError, Option[TodoItem]]
   def listTodoItems(): Stream[TodoAppError, TodoItem]

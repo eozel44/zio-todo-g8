@@ -12,6 +12,8 @@ object Dependencies {
     val zioLogging  = "0.5.10"
     val log4j       = "2.13.3"
     val disruptor   = "3.4.2"
+    val zhttp       = "1.0.0.0-RC17"
+    val circe       = "0.14.1"
   }
 
   object Libraries {
@@ -42,14 +44,24 @@ object Dependencies {
     )
 
     val zioLogging = Seq(
-      "dev.zio"   %% "zio-logging"       % Versions.zioLogging,
-      "dev.zio"   %% "zio-logging-slf4j" % Versions.zioLogging
+      "dev.zio" %% "zio-logging"       % Versions.zioLogging,
+      "dev.zio" %% "zio-logging-slf4j" % Versions.zioLogging
     )
 
     val logging = Seq(
-      "org.apache.logging.log4j" % "log4j-core"       % Versions.log4j,
+      "org.apache.logging.log4j" % "log4j-core"         % Versions.log4j,
       "org.apache.logging.log4j" % "log4j-slf4j18-impl" % Versions.log4j,
-      "com.lmax"                 % "disruptor"        % Versions.disruptor
+      "com.lmax"                 % "disruptor"          % Versions.disruptor
+    )
+
+    val zhttp = Seq(
+      "io.d11" %% "zhttp" % Versions.zhttp      
+    )
+
+    val circe = Seq(
+      "io.circe" %% "circe-core"    % Versions.circe,
+      "io.circe" %% "circe-parser"  % Versions.circe,
+      "io.circe" %% "circe-generic" % Versions.circe
     )
 
   }
