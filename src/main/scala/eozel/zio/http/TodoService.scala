@@ -6,6 +6,7 @@ import io.circe.generic.semiauto.{deriveDecoder, deriveEncoder}
 import io.circe.syntax._
 import io.circe.{Decoder, Encoder}
 import zhttp.http._
+import zio._
 
 import scala.util.Try
 
