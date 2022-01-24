@@ -17,7 +17,7 @@ object Main extends App {
       _ <- TodoItemRepository.upsertTodoItem(TodoItem(1, "todo", "eren", false))
       _ <- TodoItemRepository.upsertTodoItem(TodoItem(2, "todo", "ahmet", false))
       _ <- TodoItemRepository.upsertTodoItem(TodoItem(3, "todo", "mehmet", false))
-      _ <- log.info(s"Items inserted")
+      _ <- log.info(s"Items upserted")
       _ <- log.info(s"Service started at 9000 port!")
       _ <- Server.start(9000, TodoService.routes)
     } yield ExitCode.success

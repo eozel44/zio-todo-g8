@@ -37,7 +37,8 @@ object TodoItemRepositoryDoobie {
     override def listTodoItems(): Stream[TodoAppError, TodoItem] = ???
 
     override def upsertTodoItem(item: TodoItem): IO[TodoAppError, Unit] =
-      sql"""INSERT INTO todos (id, description, owner, finished) VALUES (${item.id}, ${item.description}, ${item.owner}, ${item.finished})""".update.run
+      sql"""INSERT INTO todos (id, description, owner, finished) VALUES (${item.id}, ${item.description}, ${item.owner}, ${item.finished}) 
+      ON DUPLICATE KEY UPDATE id = ${item.id}, description = ${item.description}, owner = ${item.owner}, finished = ${item.finished}""".update.run
         .transact(xa)
         .orDie
         .unit
