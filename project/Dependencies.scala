@@ -10,7 +10,7 @@ object Dependencies {
     val mariaDB     = "2.6.0"
     val hikari      = "4.0.3"
     val zioLogging  = "0.5.10"
-    val log4j       = "2.13.3"
+    val log4j       = "2.17.1"
     val disruptor   = "3.4.2"
     val zhttp       = "1.0.0.0-RC17"
     val circe       = "0.14.1"
